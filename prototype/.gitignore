@@ -1,0 +1,16 @@
+.env
+*.sqlite3*
+__pycache__/
+prioritized.json
+.env.*
+*.db
+*.db-*
+private/
+runs/
+attendees*.csv
+attendees*.json
+*_review.json
+*_metrics.json
+.event-router-*
+!demo_review.json
+!demo_metrics.json

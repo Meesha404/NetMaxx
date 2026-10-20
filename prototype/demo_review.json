@@ -1,0 +1,74 @@
+{
+  "output_digest": "135fe641727a99c7ab4cb3b8252417c03d4c9eeb017ad416b3306bf275486737",
+  "run_id": "a92d59d73c154a869929eb25d083805c",
+  "mode": "synthetic_demo",
+  "instructions": "Set labels to true, false or null (unknown/unreviewed). Inspect linked identity and evidence. Record reviewer and notes. Do not replace null with false for missing evidence.",
+  "attendees": [
+    {
+      "attendee_id": "5b5a8b7844cd8b30004e",
+      "name": "Alex Example",
+      "company": "Example Dev Tools",
+      "status": "demo_scored",
+      "score": 8.0,
+      "shortlist_position": 1,
+      "identity": {
+        "status": "synthetic_demo",
+        "verified": false,
+        "linkedin_url": null
+      },
+      "reason": "Synthetic demo candidate; this ranking does not describe a real person.",
+      "icebreaker": "What are you hoping to learn at this event?",
+      "evidence": [
+        {
+          "id": "e1",
+          "kind": "synthetic_role",
+          "text": "Founder",
+          "source_url": null,
+          "date": null
+        }
+      ],
+      "data_gaps": [
+        "All ratings are fixed demo fixtures; no identity or relevance inference was performed."
+      ],
+      "error": null,
+      "identity_correct": null,
+      "useful_to_meet": null,
+      "icebreaker_supported": null,
+      "reviewer": "",
+      "notes": ""
+    },
+    {
+      "attendee_id": "c72e5a50135bdd745616",
+      "name": "Sam Sample",
+      "company": "Example Ventures",
+      "status": "demo_scored",
+      "score": 6.1,
+      "shortlist_position": 2,
+      "identity": {
+        "status": "synthetic_demo",
+        "verified": false,
+        "linkedin_url": null
+      },
+      "reason": "Synthetic demo candidate; this ranking does not describe a real person.",
+      "icebreaker": "What are you hoping to learn at this event?",
+      "evidence": [
+        {
+          "id": "e1",
+          "kind": "synthetic_role",
+          "text": "Investment Partner",
+          "source_url": null,
+          "date": null
+        }
+      ],
+      "data_gaps": [
+        "All ratings are fixed demo fixtures; no identity or relevance inference was performed."
+      ],
+      "error": null,
+      "identity_correct": null,
+      "useful_to_meet": null,
+      "icebreaker_supported": null,
+      "reviewer": "",
+      "notes": ""
+    }
+  ]
+}

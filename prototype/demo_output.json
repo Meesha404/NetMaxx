@@ -1,0 +1,202 @@
+{
+  "schema_version": "1.1.0",
+  "generated_at": "2026-10-02T10:21:00.324448+00:00",
+  "run_id": "a92d59d73c154a869929eb25d083805c",
+  "started_at": "2026-10-02T10:21:00.319426+00:00",
+  "runtime_seconds": 0.005,
+  "provider_usage": {
+    "pdl": {
+      "request_attempts": 0,
+      "successful_responses": 0
+    },
+    "openai": {
+      "request_attempts": 0,
+      "successful_responses": 0
+    },
+    "apify": {
+      "request_attempts": 0,
+      "successful_responses": 0
+    }
+  },
+  "openai_tokens_observed_this_run": {
+    "prompt_tokens": 0,
+    "completion_tokens": 0,
+    "total_tokens": 0
+  },
+  "mode": "synthetic_demo",
+  "run_status": "complete",
+  "fatal_error": null,
+  "model_requested": "gpt-4o-2024-08-06",
+  "icp": {
+    "target": "B2B SaaS founders and investors looking for AI developer tools",
+    "criteria": {
+      "role_fit": "Founder of B2B SaaS or investor with a relevant mandate",
+      "topic_fit": "Evidence of work with AI developer tools, coding agents, or developer infrastructure",
+      "active_intent": "Explicit current evaluation, purchase, partnership or investment interest in AI developer tools",
+      "connector_value": "Explicit relevant portfolio, community leadership or introduction activity; title alone is insufficient",
+      "shared_background": "Documented professional overlap with the requester"
+    },
+    "weights": {
+      "role_fit": 0.3,
+      "topic_fit": 0.3,
+      "active_intent": 0.2,
+      "connector_value": 0.1,
+      "shared_background": 0.1
+    },
+    "requester": {
+      "background": "Former GE operator; enterprise product and strategy experience",
+      "goals": "Find design partners and relevant investors"
+    },
+    "exclusions": [],
+    "minimum_shortlist_score": 6
+  },
+  "score_semantics": "Weighted evidence-based relevance, 1-10; not a probability. Missing evidence contributes zero before floor of 1.",
+  "input_rows": 3,
+  "processed_unique_attendees": 2,
+  "top_candidate_ids": [
+    "5b5a8b7844cd8b30004e",
+    "c72e5a50135bdd745616"
+  ],
+  "ranked_attendees": [
+    {
+      "Attendee Name": "Alex Example",
+      "Current Company": "Example Dev Tools",
+      "Job Title": "Founder",
+      "attendee_id": "5b5a8b7844cd8b30004e",
+      "source_rows": [
+        1,
+        3
+      ],
+      "status": "demo_scored",
+      "identity": {
+        "status": "synthetic_demo",
+        "verified": false,
+        "linkedin_url": null
+      },
+      "score": 8.0,
+      "evidence": [
+        {
+          "id": "e1",
+          "kind": "synthetic_role",
+          "text": "Founder",
+          "source_url": null,
+          "date": null
+        }
+      ],
+      "dimensions": {
+        "role_fit": {
+          "rating": 9,
+          "evidence_ids": [
+            "e1"
+          ]
+        },
+        "topic_fit": {
+          "rating": 9,
+          "evidence_ids": [
+            "e1"
+          ]
+        },
+        "active_intent": {
+          "rating": 8,
+          "evidence_ids": [
+            "e1"
+          ]
+        },
+        "connector_value": {
+          "rating": 5,
+          "evidence_ids": [
+            "e1"
+          ]
+        },
+        "shared_background": {
+          "rating": 5,
+          "evidence_ids": [
+            "e1"
+          ]
+        }
+      },
+      "excluded": false,
+      "exclusion_evidence_ids": [],
+      "reason_for_priority": "Synthetic demo candidate; this ranking does not describe a real person.",
+      "reason_evidence_ids": [
+        "e1"
+      ],
+      "icebreaker_hook": "What are you hoping to learn at this event?",
+      "hook_evidence_ids": [
+        "e1"
+      ],
+      "data_gaps": [
+        "All ratings are fixed demo fixtures; no identity or relevance inference was performed."
+      ]
+    },
+    {
+      "Attendee Name": "Sam Sample",
+      "Current Company": "Example Ventures",
+      "Job Title": "Investment Partner",
+      "attendee_id": "c72e5a50135bdd745616",
+      "source_rows": [
+        2
+      ],
+      "status": "demo_scored",
+      "identity": {
+        "status": "synthetic_demo",
+        "verified": false,
+        "linkedin_url": null
+      },
+      "score": 6.1,
+      "evidence": [
+        {
+          "id": "e1",
+          "kind": "synthetic_role",
+          "text": "Investment Partner",
+          "source_url": null,
+          "date": null
+        }
+      ],
+      "dimensions": {
+        "role_fit": {
+          "rating": 8,
+          "evidence_ids": [
+            "e1"
+          ]
+        },
+        "topic_fit": {
+          "rating": 7,
+          "evidence_ids": [
+            "e1"
+          ]
+        },
+        "active_intent": {
+          "rating": 4,
+          "evidence_ids": [
+            "e1"
+          ]
+        },
+        "connector_value": {
+          "rating": 8,
+          "evidence_ids": [
+            "e1"
+          ]
+        },
+        "shared_background": {
+          "rating": 0,
+          "evidence_ids": []
+        }
+      },
+      "excluded": false,
+      "exclusion_evidence_ids": [],
+      "reason_for_priority": "Synthetic demo candidate; this ranking does not describe a real person.",
+      "reason_evidence_ids": [
+        "e1"
+      ],
+      "icebreaker_hook": "What are you hoping to learn at this event?",
+      "hook_evidence_ids": [
+        "e1"
+      ],
+      "data_gaps": [
+        "All ratings are fixed demo fixtures; no identity or relevance inference was performed."
+      ]
+    }
+  ],
+  "review_and_errors": []
+}

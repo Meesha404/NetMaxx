@@ -1,0 +1,314 @@
+CODEX HANDOFF — B2B EVENT NETWORKING / EVENT ROUTER
+Prepared: 2 October 2026
+Project name: Event Router (working name, not a final brand)
+
+Read this file, README.md, event_router.py, icp.json and test_event_router.py
+before changing the project. Continue the supplied implementation. Treat the
+actual source and test results as authoritative if they differ from this brief.
+
+1. WHAT WE ARE BUILDING
+
+A high-velocity B2B event networking prototype for a founder preparing an a16z
+Speedrun application. The founder supplied an application window of October 12
+to November 1, 2026; this window has NOT been independently verified. Verify it
+from official sources if using it for application scheduling or external copy.
+
+Core question:
+"Given who I am, what I want, and this event's attendee list, which 5–10 people
+should I make a point of meeting, why, and how should I start the conversation?"
+
+The longer-term room size is approximately 3,000 attendees. The immediate
+validation dataset should contain only 20–30 real attendees. Earn confidence in
+identity resolution and shortlist quality before expanding volume or UI scope.
+
+The product turns raw names, companies and job titles into an evidence-backed,
+personalized shortlist. Strategic value can come from:
+- A match to the user's target customer or partner profile.
+- A relevant founder or investor.
+- A connector with an evidenced relevant portfolio/community/network role.
+- A professional background overlap that creates a useful conversation opening.
+
+"Predictive heat map" and "identity-routing engine" are product aspirations.
+The current implementation is a ranked JSON pipeline, not a physical venue map,
+trained predictive model, real-time location system or calibrated probability.
+
+Founder hypothesis: static guest sheets and existing event-networking workflows
+leave too much work to the attendee. Whova and Brella were named as comparison
+products in the original brief. Do not assume their current capabilities are
+limited to a phonebook without research. The brief's "90% of time wasted" is
+positioning language, not a measured statistic.
+
+2. FOUNDER CONTEXT AND WORKING STYLE
+
+Founder: Manisha Sharma, an ex-GE operator with enterprise product/design and
+strategy experience and firsthand context on large corporate conventions and
+sales summits. She is working as a solo founder and wants fast implementation
+with AI engineering assistance. Practical enterprise usefulness matters more
+than technical complexity or a flashy interface.
+
+She wants to continue this project in Codex and keep it in a normal Git-based
+development workflow. No repository URL, GitHub access, local project path,
+deployment account, API credentials or real attendee dataset has been confirmed
+in this handoff. Do not assume access from a previous ChatGPT conversation.
+
+Make reasonable reversible engineering decisions, explain material tradeoffs,
+and keep progressing on unblocked work. Ask concise questions only for missing
+inputs that actually block the next step. Do not make her reinstall tools the
+project does not require. The supplied backend needs Python, not npm or Homebrew.
+
+3. INSPIRATION — LABEL AS UNVERIFIED
+
+The founder cited Hotbox as an analogy: enrich and resolve noisy identity data
+first, then make it actionable. Her brief described Hotbox as a16z Speedrun
+SR006, founded by Harpriya Bagri, with $450k ARR from Instagram-comment identity
+enrichment. These details were NOT verified during this build. They are not
+acceptance criteria, dependencies, or approved external claims.
+
+Transferable idea: attendee lists are incomplete identity records; resolving
+them into useful context may create more value than another directory UI.
+
+4. ORIGINAL MVP REQUIREMENTS
+
+A. Ingest CSV or JSON with these exact required headers/keys:
+   Attendee Name | Current Company | Job Title
+B. Use a live enrichment provider to resolve Name + Company to a LinkedIn profile.
+C. Enrich profile summary/about, current role, past jobs and recent public posts.
+D. Evaluate each attendee against a configurable enterprise ICP with structured
+   LLM output. Default ICP: B2B SaaS founders and investors looking for AI dev tools.
+E. Emit prioritized JSON with a 1–10 score, one-sentence reason for priority and
+   tailored conversational icebreaker for candidates.
+F. Handle API errors, rate limits and token throttling gracefully.
+
+Initial scope explicitly excluded an over-engineered frontend. Keep the backend
+usable by CLI; build a thin demo interface only after validating the live data
+path and if requested. No authentication product, payments, CRM integration,
+automated outreach, calendar booking or social feed is currently required.
+
+5. WHAT HAS ALREADY BEEN IMPLEMENTED
+
+The supplied folder includes:
+- event_router.py: complete standard-library Python backend, version 1.0.0.
+- test_event_router.py: 20 offline unit/contract/failure-path tests.
+- icp.json: configurable target, criteria, weights, requester and exclusions.
+- sample_attendees.csv / sample_attendees.json: fictional inputs.
+- demo_output.json: explicitly synthetic example output.
+- README.md: operational contract, setup, caveats and provider documentation links.
+- .gitignore: basic exclusions for cache, environment file and generated output.
+- CODEX_HANDOFF.txt: this continuation brief.
+
+Python requirement: 3.10+. No external Python packages required.
+There is no web server, frontend, hosted deployment or verified Git remote yet.
+
+The original package was generated and its 20 tests passed offline in the prior
+environment. A demo CLI run was also checked. Re-run locally before editing.
+No paid enrichment, post or OpenAI endpoint was exercised with live credentials.
+Calling this "production-oriented" describes design choices; it does not mean
+the system has passed production deployment or real-world quality validation.
+
+Implemented pipeline:
+1. Validate CSV/JSON, preserve invalid rows, collapse identical name/company/title
+   triples while preserving their source row numbers.
+2. People Data Labs (PDL) Person Enrichment resolves identity and returns profile
+   data in one call. No redundant second enrichment call is needed.
+3. A conservative identity gate decides whether scoring is allowed.
+4. Optional HarvestAPI LinkedIn profile posts actor on Apify fetches recent posts.
+5. GPT-4o Structured Outputs evaluates five dimensions, reason, hook and gaps.
+6. Python computes a deterministic weighted relevance score and sorts results.
+7. JSON holds the ranked list, top candidate IDs and a separate review/error queue.
+
+Provider choices:
+- PDL replaced the original brief's example Proxycurl integration after official
+  documentation indicated that the original Proxycurl service had shut down.
+- Clay was not integrated. Do not invent a generic Clay lookup endpoint.
+- PDL does not supply the recent-post feed in this implementation; Apify is a
+  separate optional integration.
+- Default OpenAI model: gpt-4o-2024-08-06, configurable using --model.
+  Check current availability if a live request rejects it; explain any change.
+- Provider documentation links and exact implementation details are in README.md.
+
+6. IDENTITY AND EVIDENCE CONTRACT — PRESERVE THIS
+
+Name + company cannot guarantee an exact, independently verified identity.
+Accepted matches are high_confidence_match with verified:false, not "verified
+by LinkedIn". Do not turn a provider score of 8/10 into "80% confidence".
+
+Current gate requires:
+- PDL likelihood >=8 by default (--min-likelihood accepts 6–10).
+- Both name and company reported as matching by PDL.
+- A provider-returned LinkedIn personal-profile URL passing structural checks.
+- Current company matches after conservative case/whitespace/legal-suffix cleanup.
+
+PDL's company input can match past employment. A former employer, unexplained
+alias or uncertain match therefore goes to needs_review. No LLM scoring should
+proceed on an unresolved or ambiguous identity. Failure is score:null, not 1/10.
+
+PDL summary is the about-equivalent, not a separately retrieved About field.
+Nulls remain explicit. Only a bounded set of professional fields is used as LLM
+evidence; personal contact and home address data are not included in that payload.
+
+The posts adapter requests up to five original posts, filters author identity,
+and requires a timestamp within the last 90 days. Missing/failed posts are
+explicit. Never invent a post, shared connection or mutual work history.
+A shared employer does not imply two people knew each other or worked together.
+
+Evidence IDs and source URLs accompany the score and text. The code checks that
+IDs exist; it does NOT mechanically prove that every generated claim is entailed
+by that evidence. Structured Outputs guarantees shape, not factual correctness.
+
+7. SCORING CONTRACT
+
+Default weights:
+role_fit          30% — relevant founder/investor role
+topic_fit         30% — AI developer tools relevance
+active_intent     20% — explicit evaluation/buying/partner/investment signal
+connector_value   10% — evidenced relevant network access/activity
+shared_background 10% — supported overlap with requester context
+
+Each dimension receives 0–10 plus evidence IDs. Unknown/missing evidence scores
+zero for that dimension and should appear as a data gap. The displayed score is:
+max(1, sum(dimension_rating * weight) / sum(weights)), rounded to two decimals.
+
+The model must not infer buying intent from title, prestige or AI keywords.
+Connector value needs actual evidence; follower count alone is insufficient.
+These are heuristic relevance scores, NOT likelihood of conversion or willingness
+to meet. Sparse profiles may rank lower even when the real person is relevant;
+measure that bias during evaluation instead of hiding missingness.
+
+icp.json contains target text, dimension criteria, weights, requester context,
+exclusions and minimum_shortlist_score (default 6). The top list contains up to
+--top-k (default 10) distinct resolved identities meeting that threshold. Fewer
+than five is acceptable when evidence is insufficient. Never pad the shortlist.
+
+The founder's background and the target ICP are different inputs. Preserve that
+distinction; do not silently turn every run into a personal job-search matcher.
+
+8. EXISTING RELIABILITY MEASURES AND LIMITS
+
+- SQLite caches enrichment/scoring; keys include relevant configuration/evidence.
+- 24-hour default cache TTL; recent posts have a separate 24-hour cache.
+- TTL stops reuse but does not physically purge expired records from storage.
+- Atomic output writes and per-attendee checkpoints.
+- Bounded retries with backoff/jitter, Retry-After handling and timeouts.
+- Core auth/quota errors halt with partial output; optional post failures degrade.
+- A persistent guard prevents blindly replaying an uncertain paid Apify POST.
+- Logs avoid raw keys, names, provider responses and attendee data.
+- Refusals, truncated model output and invalid evidence references become errors.
+- The loop is SEQUENTIAL with request pacing, not parallel/batch high throughput.
+- Token throttling is reactive 429 handling, not a shared token-budget scheduler.
+- Rewriting the whole matrix after every row may become costly for large lists.
+- Run only one process per cache/output file under the present design.
+- Credentials are read from environment variables; .env is not loaded automatically.
+
+The present tests cover ingestion/deduplication, identity gating, URL spoof
+rejection, stale/wrong-author posts, evidence validation, model refusals and
+truncation, retries/quota, uncertain paid-call replay prevention, cache expiry,
+mocked live-flow recovery, partial output, ranking, exclusions and a no-network demo.
+They do not establish provider availability, matching accuracy or human utility.
+
+9. HOW TO RUN
+
+From the extracted event-router directory:
+
+    python3 --version
+    python3 -m unittest -v
+    python3 event_router.py sample_attendees.csv --demo --output demo_output.json
+
+Demo mode never calls providers. Its scores are fixed fictional fixtures, not
+inference results, and its sample identities are not real networking leads.
+
+Live mode requires environment variables supplied securely by the founder:
+    PDL_API_KEY
+    OPENAI_API_KEY
+    APIFY_TOKEN     (only when --posts is enabled)
+
+Do not ask the founder to paste secrets into chat or commit them. Explain how
+to set them locally using her environment's secure workflow. Never print them.
+
+    python3 event_router.py attendees.csv --icp icp.json --limit 20 \
+      --top-k 10 --output prioritized.json
+
+Add --posts only when the Apify credential and budget are available.
+
+Exit codes:
+0 = completed; unresolved/review rows can still exist.
+1 = completed with issues, including an intentional --limit or optional-post failure.
+2 = configuration/fatal error or interruption.
+
+Do not mistake exit 1 after a limited pilot for a total failure. Inspect the
+JSON's run_status, fatal_error, timestamps and per-row status. A startup config
+error can leave an older output untouched.
+
+10. YOUR NEXT IMPLEMENTATION TASK
+
+Continue this backend; do not start over or introduce a frontend framework.
+
+Step A — Establish the local baseline.
+Read the repository instructions, this handoff and the actual code. Check Git
+status and preserve unrelated user changes. Run the tests and demo. Briefly
+report what exists, what works locally and the most consequential gaps.
+
+Step B — Audit and fix concrete integration risks.
+Inspect actual provider response assumptions, nullable/malformed nested fields,
+retry/timeout behavior, quota handling, identity checks, evidence provenance,
+output/checkpoint semantics and secret handling. Add targeted tests for actual
+bugs found. Verify current official API contracts before changing adapters.
+Extend .gitignore for real attendee inputs and generated outputs if needed.
+Do not optimize or modularize merely to increase code complexity.
+
+Step C — Prepare and exercise a small live pilot.
+Ask for a real 20–30-person attendee CSV/JSON and the missing credential setup
+only when needed. Confirm the requester's actual event objective and ICP if the
+default is not appropriate. Run a very small smoke test first, then the pilot
+within the agreed scope/budget. Do not unexpectedly run all 3,000 paid lookups.
+If credentials/data are unavailable, finish the offline fixes and pilot tooling,
+then state precisely what blocks live validation. Do not fabricate pilot results.
+
+Step D — Make shortlist quality reviewable.
+Provide a lightweight way to record founder judgments of identity correctness,
+relevance and icebreaker accuracy alongside the output. A CSV/JSON review file
+is sufficient; do not build a labeling platform. Measure resolved/review/error
+coverage, useful candidates in the top five/ten, unsupported hooks, runtime and
+available provider usage. Define denominators and keep provider likelihood
+separate from human relevance labels. Do not report money costs without real
+usage and pricing evidence.
+
+Step E — Pick the next improvement from observed failures.
+Examples: company aliases, manual identity overrides with provenance, accepting
+attendee-supplied profile URLs, sparse-profile handling, post schema changes,
+bounded concurrency/batching, or more efficient checkpoints. These are possible
+follow-ups, not features already built or a request to implement all of them.
+Any future manual identity override should record who supplied it and its source.
+
+Only after the backend pilot is convincing, discuss a minimal demo flow:
+upload list → define objective → see shortlist/reasons/hooks → review uncertain
+identities. Keep source links and missing-data labels visible. A polished UI is
+not the current acceptance gate.
+
+11. COMPLETION CRITERIA FOR THE NEXT MILESTONE
+
+- Existing demo and relevant tests pass in the new environment.
+- Any repaired failure cases have meaningful regression coverage.
+- A real pilot either completes or has a clearly identified external blocker.
+- Ranked results link to provider-resolved identities and supporting evidence.
+- Uncertain matches and API failures are explicit and excluded from the shortlist.
+- No invented buying intent, shared history, social posts or confidence percentages.
+- Cache reuse avoids unnecessary repeat work; partial results survive failures.
+- The founder can inspect top candidates and record whether they are useful.
+- Report changes, tests, actual live-validation status and remaining limitations.
+
+12. IMPORTANT HANDOFF BOUNDARIES
+
+The previous conversation did not connect GitHub or supply a repository URL.
+This bundle contains the source; it is not a reference that requires access to
+the old chat's filesystem. Do not rely on old sandbox paths or Library IDs.
+If a repository is already open, integrate with its existing structure. If the
+folder is new, prepare it locally and obtain the correct remote before pushing.
+Do not publish the application or send outreach messages as part of backend work.
+
+No founder API keys, real attendee data, private profiles or account tokens are
+included. The next agent must not assume access to prior conversation memory.
+Do not claim that the product is deployed, live-tested, trained, independently
+identity-verified or proven to improve networking outcomes until evidence exists.
+
+START NOW: inspect the supplied project, run the baseline, then continue with
+the unblocked backend improvements and pilot preparation described above.

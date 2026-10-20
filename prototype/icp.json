@@ -1,0 +1,23 @@
+{
+  "target": "B2B SaaS founders and investors looking for AI developer tools",
+  "criteria": {
+    "role_fit": "Founder of B2B SaaS or investor with a relevant mandate",
+    "topic_fit": "Evidence of work with AI developer tools, coding agents, or developer infrastructure",
+    "active_intent": "Explicit current evaluation, purchase, partnership or investment interest in AI developer tools",
+    "connector_value": "Explicit relevant portfolio, community leadership or introduction activity; title alone is insufficient",
+    "shared_background": "Documented professional overlap with the requester"
+  },
+  "weights": {
+    "role_fit": 0.3,
+    "topic_fit": 0.3,
+    "active_intent": 0.2,
+    "connector_value": 0.1,
+    "shared_background": 0.1
+  },
+  "requester": {
+    "background": "Former GE operator; enterprise product and strategy experience",
+    "goals": "Find design partners and relevant investors"
+  },
+  "exclusions": [],
+  "minimum_shortlist_score": 6
+}

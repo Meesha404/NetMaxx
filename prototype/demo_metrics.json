@@ -1,0 +1,95 @@
+{
+  "mode": "synthetic_demo",
+  "run_id": "a92d59d73c154a869929eb25d083805c",
+  "run_status": "complete",
+  "input_rows": 3,
+  "unique_valid_attendees": 2,
+  "attempted_unique_attendees": 2,
+  "invalid_input_rows": 0,
+  "status_counts": {
+    "demo_scored": 2
+  },
+  "resolved_coverage": {
+    "numerator": 0,
+    "denominator": 2,
+    "fraction": 0.0
+  },
+  "review_coverage": {
+    "numerator": 0,
+    "denominator": 2,
+    "fraction": 0.0
+  },
+  "error_coverage": {
+    "numerator": 0,
+    "denominator": 2,
+    "fraction": 0.0
+  },
+  "identity_accuracy_among_reviewed_resolved": {
+    "numerator": 0,
+    "denominator": 0,
+    "fraction": null
+  },
+  "unsupported_hooks_among_reviewed": {
+    "numerator": 0,
+    "denominator": 0,
+    "fraction": null
+  },
+  "shortlist_quality": {
+    "top_5": {
+      "available_candidates": 2,
+      "reviewed": 0,
+      "useful_among_reviewed": {
+        "numerator": 0,
+        "denominator": 0,
+        "fraction": null
+      },
+      "confirmed_useful_among_available": {
+        "numerator": 0,
+        "denominator": 2,
+        "fraction": 0.0
+      },
+      "unreviewed": 2
+    },
+    "top_10": {
+      "available_candidates": 2,
+      "reviewed": 0,
+      "useful_among_reviewed": {
+        "numerator": 0,
+        "denominator": 0,
+        "fraction": null
+      },
+      "confirmed_useful_among_available": {
+        "numerator": 0,
+        "denominator": 2,
+        "fraction": 0.0
+      },
+      "unreviewed": 2
+    }
+  },
+  "runtime_seconds": 0.005,
+  "provider_usage": {
+    "pdl": {
+      "request_attempts": 0,
+      "successful_responses": 0
+    },
+    "openai": {
+      "request_attempts": 0,
+      "successful_responses": 0
+    },
+    "apify": {
+      "request_attempts": 0,
+      "successful_responses": 0
+    }
+  },
+  "openai_tokens_observed_this_run": {
+    "prompt_tokens": 0,
+    "completion_tokens": 0,
+    "total_tokens": 0
+  },
+  "notes": [
+    "Coverage denominator: attempted unique input triples, including fatal attempted rows; invalid and unprocessed rows excluded.",
+    "Resolved coverage may overlap errors when scoring failed after resolution. Shortlist is distinct LinkedIn identities.",
+    "Unreviewed labels remain unknown; synthetic demo metrics do not measure live quality.",
+    "Request attempts include retries; observed token counts exclude cached assessments and unknown usage on failed responses. No monetary cost inferred."
+  ]
+}
